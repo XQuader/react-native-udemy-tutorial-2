@@ -40,6 +40,8 @@ export default class App extends React.Component {
         <Deck
           data={DATA}
           renderCard={this.renderCard}
+          onSwipeRight={() => {}}
+          onSwipeLeft={() => {}}
         />
       </View>
     );
@@ -52,17 +54,5 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     backgroundColor: '#fff'
-  },
-  card: {
-    alignItems: 'center',
-    marginBottom: 20
-  },
-  imageContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  image: {
-    height: 300,
-    flex: 1
   }
 });
