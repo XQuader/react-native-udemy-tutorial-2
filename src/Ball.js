@@ -3,7 +3,7 @@ import { View, Animated } from 'react-native';
 
 class Ball extends Component {
   componentWillMount() {
-    this.position = new Animated.ValueXY({x: 10, y: 30});
+    this.position = new Animated.ValueXY({x: 0, y: 0});
     Animated.spring(this.position, {
       toValue: {
         x: 200,
