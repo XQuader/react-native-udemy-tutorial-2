@@ -50,22 +50,12 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
         <Deck
+          style={{ marginTop: 10 }}
           data={DATA}
           renderCard={this.renderCard}
           renderNoMoreCards={this.renderNoMoreCards}
         />
-      </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 30,
-    marginLeft: 10,
-    marginRight: 10,
-    backgroundColor: '#fff'
-  }
-});
