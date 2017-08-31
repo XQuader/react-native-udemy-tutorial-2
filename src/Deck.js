@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { View, Animated, PanResponder, Dimensions, ToastAndroid } from 'react-native';
+import { View, Animated, PanResponder, Dimensions } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = 0.5 * SCREEN_WIDTH;
 const SWIPE_OUT_DURATION = 250;
 
 class Deck extends Component {
+  static defaultProps = {
+    onSwipeRight: () => {},
+    onSwipeLeft: () => {}
+  };
+
   state = {
     index: 0
   };
@@ -34,7 +39,6 @@ class Deck extends Component {
   forceSwipe(direction) {
     const x = direction === 'Right' ? SCREEN_WIDTH : -SCREEN_WIDTH;
 
-    ToastAndroid.show(direction, 400);
     Animated.timing(this.position, {
       toValue: { x, y: 0 },
       duration: SWIPE_OUT_DURATION
@@ -46,6 +50,8 @@ class Deck extends Component {
     const item = data[this.state.index];
 
     direction === 'Right' ? onSwipeRight(item) : onSwipeLeft(item);
+    this.position.setValue( {x: 0, y: 0 });
+    this.setState({ index: this.state.index + 1 });
   };
 
   resetPosition() {
@@ -70,8 +76,10 @@ class Deck extends Component {
   }
 
   renderCards() {
-    return this.props.data.map((item, index) => {
-      if (!index) {
+    return this.props.data.map((item, i) => {
+      if (i < this.state.index) { return null;}
+
+      if (i === this.state.index) {
         return (
           <Animated.View
             key={item.id}
