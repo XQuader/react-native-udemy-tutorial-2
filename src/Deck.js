@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Animated, PanResponder, Dimensions } from 'react-native';
+import { View, Animated, PanResponder, Dimensions, Text } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = 0.5 * SCREEN_WIDTH;
@@ -8,7 +8,8 @@ const SWIPE_OUT_DURATION = 250;
 class Deck extends Component {
   static defaultProps = {
     onSwipeRight: () => {},
-    onSwipeLeft: () => {}
+    onSwipeLeft: () => {},
+    renderNoMoreCards: () => <Text>No more Cards to show!</Text>
   };
 
   state = {
@@ -76,6 +77,10 @@ class Deck extends Component {
   }
 
   renderCards() {
+    if (this.state.index >= this.props.data.length) {
+      return this.props.renderNoMoreCards();
+    }
+
     return this.props.data.map((item, i) => {
       if (i < this.state.index) { return null;}
 
