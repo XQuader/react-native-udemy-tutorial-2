@@ -22,7 +22,7 @@ module.exports = (req, res) => {
 
         ref.update({ codeValid: false });
         admin.auth().createCustomToken(phone)
-          .then(token => res.send(token))
+          .then(token => res.send({ token }))
           .catch(error => res.status(422).send(error));
       });
     })
