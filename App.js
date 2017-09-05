@@ -24,8 +24,7 @@ export default class App extends React.Component {
               settings: { screen: SettingsScreen }
             }, {
               swipeEnabled: false,
-              animationEnabled: false,
-              tabBarPosition: 'bottom'
+              animationEnabled: false
             })
           }
         }, {
