@@ -1,11 +1,46 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { TabNavigator, StackNavigator } from 'react-navigation';
+
+import WelcomScreen from './src/screens/WelcomeScreen';
+import AuthScreen from './src/screens/AuthScreen';
+import MapScreen from './src/screens/MapScreen';
+import DeckScreen from './src/screens/DeckScreen';
+import ReviewScreen from './src/screens/ReviewScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 
 export default class App extends React.Component {
   render() {
+    const MainNavigator = TabNavigator({
+      welcome: { screen: WelcomScreen },
+      auth: { screen: AuthScreen },
+      mainFlow: {
+        screen: TabNavigator({
+          map: { screen: MapScreen },
+          deck: { screen: DeckScreen },
+          review: {
+            screen: StackNavigator({
+              review: { screen: ReviewScreen },
+              settings: { screen: SettingsScreen }
+            }, {
+              swipeEnabled: false,
+              animationEnabled: false,
+              tabBarPosition: 'bottom'
+            })
+          }
+        }, {
+          swipeEnabled: false,
+          animationEnabled: false,
+          tabBarPosition: 'bottom'
+        })
+      }
+    }, {
+      tabBarPosition: 'bottom'
+    });
+
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <MainNavigator />
       </View>
     );
   }
@@ -13,9 +48,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    marginTop: 24,
+    flex: 1
+  }
 });
