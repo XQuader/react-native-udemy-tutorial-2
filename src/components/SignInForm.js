@@ -18,7 +18,6 @@ class SignInForm extends Component {
     try {
       let { data } = await axios.post(`${ROOT_URL}/verifyPassword`, { phone, code });
 
-      console.log(data);
       firebase.auth().signInWithCustomToken(data.token);
     } catch (error) {
       console.log(error);
