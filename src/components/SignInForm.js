@@ -2,20 +2,24 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native'
 import { FormLabel, FormInput, Button} from 'react-native-elements';
 import axios from 'axios';
+import firebase from 'firebase';
 
 const ROOT_URL = 'https://us-central1-one-time-password-e9109.cloudfunctions.net';
 
-class SignUp extends Component {
-  state = { phone: '' };
+class SignInForm extends Component {
+  state = { phone: '', code: '' };
 
   handlePhoneChange = phone => this.setState({ phone });
+  handleCodeChange = code => this.setState({ code });
 
   handleSubmit = async () => {
-    const { phone } = this.state;
+    const { phone, code } = this.state;
 
     try {
-      await axios.post(`${ROOT_URL}/createUser`, { phone });
-      await axios.post(`${ROOT_URL}/requestPassword`, { phone });
+      let { data } = await axios.post(`${ROOT_URL}/verifyPassword`, { phone, code });
+
+      console.log(data);
+      firebase.auth().signInWithCustomToken(data.token);
     } catch (error) {
       console.log(error);
     }
@@ -29,10 +33,19 @@ class SignUp extends Component {
           <FormInput
             value={this.state.phone}
             onChangeText={this.handlePhoneChange}
+            keyboardType='numeric'
+          />
+        </View>
+        <View style={{ marginBottom: 10 }}>
+          <FormLabel>Enter Code</FormLabel>
+          <FormInput
+            value={this.state.code}
+            onChangeText={this.handleCodeChange}
+            keyboardType='numeric'
           />
         </View>
         <Button
-          title='SignUp'
+          title='SignIn'
           onPress={this.handleSubmit}
         />
       </View>
@@ -40,4 +53,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default SignInForm;
