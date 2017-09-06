@@ -18,22 +18,26 @@ export default class App extends React.Component {
         screen: TabNavigator({
           map: { screen: MapScreen },
           deck: { screen: DeckScreen },
-          review: {
+          reviewStack: {
             screen: StackNavigator({
               review: { screen: ReviewScreen },
               settings: { screen: SettingsScreen }
             }, {
+              lazyLoad: true,
               swipeEnabled: false,
               animationEnabled: false
             })
           }
         }, {
+          lazyLoad: true,
           swipeEnabled: false,
           animationEnabled: false,
           tabBarPosition: 'bottom'
         })
       }
     }, {
+      lazyLoad: true,
+      swipeEnabled: false,
       tabBarPosition: 'bottom'
     });
 
