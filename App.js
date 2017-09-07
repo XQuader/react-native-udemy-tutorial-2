@@ -1,57 +1,16 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import Main from './src';
+import configureStore from './src/configureStore';
 
-import WelcomScreen from './src/screens/WelcomeScreen';
-import AuthScreen from './src/screens/AuthScreen';
-import MapScreen from './src/screens/MapScreen';
-import DeckScreen from './src/screens/DeckScreen';
-import ReviewScreen from './src/screens/ReviewScreen';
-import SettingsScreen from './src/screens/SettingsScreen';
+const store = configureStore();
 
-export default class App extends React.Component {
+export default class App extends Component {
   render() {
-    const MainNavigator = TabNavigator({
-      welcome: { screen: WelcomScreen },
-      auth: { screen: AuthScreen },
-      mainFlow: {
-        screen: TabNavigator({
-          map: { screen: MapScreen },
-          deck: { screen: DeckScreen },
-          reviewStack: {
-            screen: StackNavigator({
-              review: { screen: ReviewScreen },
-              settings: { screen: SettingsScreen }
-            }, {
-              lazyLoad: true,
-              swipeEnabled: false,
-              animationEnabled: false
-            })
-          }
-        }, {
-          lazyLoad: true,
-          swipeEnabled: false,
-          animationEnabled: false,
-          tabBarPosition: 'bottom'
-        })
-      }
-    }, {
-      lazyLoad: true,
-      swipeEnabled: false,
-      tabBarPosition: 'bottom'
-    });
-
     return (
-      <View style={styles.container}>
-        <MainNavigator />
-      </View>
+      <Provider store={store}>
+        <Main/>
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 24,
-    flex: 1
-  }
-});

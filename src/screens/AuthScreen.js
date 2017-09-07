@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { dummy } from '../actions';
+
+const APP_ID = 1929727650627951;
 
 class AuthScreen extends Component {
+
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <Text>AuthScreen</Text>
       </View>
     );
   }
 }
 
-const styles = {
-  container: {
-
-  }
-};
-
-export default AuthScreen;
+export default connect(null, { dummy })(AuthScreen);
