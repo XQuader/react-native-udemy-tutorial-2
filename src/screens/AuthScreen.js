@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { dummy } from '../actions';
+import { facebookLogin } from '../actions';
 
 const APP_ID = 1929727650627951;
 
 class AuthScreen extends Component {
+  componentWillMount() {
+    this.props.facebookLogin();
+  }
 
   render() {
     return (
@@ -16,5 +19,5 @@ class AuthScreen extends Component {
   }
 }
 
-const reduxed = connect(null, { dummy })(AuthScreen);
+const reduxed = connect(null, { facebookLogin })(AuthScreen);
 export { reduxed as AuthScreen };

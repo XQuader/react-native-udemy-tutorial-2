@@ -1,5 +1,1 @@
-export function dummy() {
-  return {
-    type: 1
-  }
-}
+export * from './AuthActions';
