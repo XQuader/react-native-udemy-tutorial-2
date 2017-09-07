@@ -15,6 +15,6 @@ export default function configureStore() {
   }
 
   const reducers = require('./reducers/index').default;
-  const store = createStore(reducers, composeEnhancers(applyMiddleware(ReduxThunk)));
+  const store = createStore(reducers, {}, composeEnhancers(applyMiddleware(ReduxThunk)));
   return store;
 }

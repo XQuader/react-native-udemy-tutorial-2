@@ -16,4 +16,5 @@ class AuthScreen extends Component {
   }
 }
 
-export default connect(null, { dummy })(AuthScreen);
+const reduxed = connect(null, { dummy })(AuthScreen);
+export { reduxed as AuthScreen };

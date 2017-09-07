@@ -17,4 +17,4 @@ const styles = {
   }
 };
 
-export default MapScreen;
+export { MapScreen };

@@ -17,4 +17,4 @@ const styles = {
   }
 };
 
-export default SettingsScreen;
+export { SettingsScreen };
