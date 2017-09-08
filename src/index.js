@@ -17,22 +17,24 @@ export default class App extends React.Component {
               review: { screen: ReviewScreen },
               settings: { screen: SettingsScreen }
             }, {
-              lazyLoad: true,
+              lazy: true,
               swipeEnabled: false,
               animationEnabled: false
             })
           }
         }, {
-          lazyLoad: true,
+          lazy: true,
           swipeEnabled: false,
           animationEnabled: false,
           tabBarPosition: 'bottom'
         })
       }
     }, {
-      lazyLoad: true,
-      swipeEnabled: false,
-      tabBarPosition: 'bottom'
+      navigationOptions: {
+        tabBarVisible: false
+      },
+      lazy: true,
+      swipeEnabled: false
     });
 
     return (
