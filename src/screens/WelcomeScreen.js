@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AsyncStorage, ActivityIndicator } from 'react-native';
 import Slides from '../components/Slides';
 
 const SLIDE_DATA = [
@@ -8,18 +9,42 @@ const SLIDE_DATA = [
 ];
 
 class WelcomeScreen extends Component {
+  state = { isReady: false };
+
+  async componentDidMount() {
+    const token = await AsyncStorage.getItem('fb_token');
+
+    this.setState({ isReady: true });
+
+    if (token) {
+      this.props.navigation.navigate('map');
+    }
+  }
+
   handleSlidesComplete = () => {
     this.props.navigation.navigate('auth');
   };
 
   render() {
+    if (!this.state.isReady) {
+      return <ActivityIndicator size={80} style={styles.spinner} />
+    }
+
     return (
-        <Slides
-          data={SLIDE_DATA}
-          onSlidesComplete={this.handleSlidesComplete}
-        />
+      <Slides
+        data={SLIDE_DATA}
+        onSlidesComplete={this.handleSlidesComplete}
+      />
     );
   }
 }
+
+const styles = {
+  spinner: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+};
 
 export { WelcomeScreen };
