@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { MapView } from 'expo';
+import { connect } from 'react-redux';
+import { Button } from 'react-native-elements';
+import { fetchJobs } from '../actions'
 
 class MapScreen extends Component {
   state = {
@@ -13,23 +16,16 @@ class MapScreen extends Component {
     }
   };
 
-  componentDidMount(){
-    navigator.geolocation.getCurrentPosition(position => {
-        const { region } = this.state;
-        const { latitude, longitude } = position.coords;
-        const newRegion = { ...region, latitude, longitude };
-
-        this.setState({ mapLoaded: true, region: newRegion });
-      }, error => this.setState({ mapLoaded: true }), {
-        enableHighAccuracy: true,
-        timeout: 20000,
-        maximumAge: 1000
-      }
-    );
+  componentDidMount() {
+    this.setState({ mapLoaded: true });
   }
 
   handleRegionChange = region => {
     this.setState({ region });
+  };
+
+  handleSearchButtonPress = () => {
+    this.props.fetchJobs(this.state.region, () => this.props.navigation.navigate('deck'));
   };
 
   render() {
@@ -44,6 +40,14 @@ class MapScreen extends Component {
           initialRegion={this.state.region}
           onRegionChangeComplete={this.handleRegionChange}
         />
+        <Button
+          title='Search This Area'
+          onPress={this.handleSearchButtonPress}
+          containerViewStyle={styles.buttonContainer}
+          buttonStyle={{ flex: 1 }}
+          backgroundColor='#009688'
+          icon={{ name: 'search' }}
+        />
       </View>
     );
   }
@@ -57,7 +61,13 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 20,
+    flexDirection: 'row'
   }
 };
 
-export { MapScreen };
+const reduxed = connect(null, { fetchJobs })(MapScreen);
+export { reduxed as MapScreen };
