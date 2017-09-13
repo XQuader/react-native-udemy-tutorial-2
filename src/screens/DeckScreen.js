@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, Text, View, Platform } from 'react-native';
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
-import { Card } from 'react-native-elements';
+import { Button, Card } from 'react-native-elements';
 import Deck from '../components/Deck';
 import { likeJob, dislikeJob } from '../actions';
 
@@ -49,14 +49,22 @@ class DeckScreen extends Component {
     this.props.dislikeJob(job);
   };
 
-  renderNoMoreCards() {
+  renderNoMoreCards = () => {
     return (
       <Card
         containerStyle={{ borderRadius: 10, width: SCREEN_WIDTH * 0.92, height: SCREEN_HEIGHT - 165 }}
         title="No more jobs"
-      />
+      >
+        <Button
+          title='Back To Map'
+          large
+          icon={{ name: 'my-location' }}
+          backgroundColor='#03A9F4'
+          onPress={() => this.props.navigation.navigate('map')}
+        />
+      </Card>
     )
-  }
+  };
 
   render() {
     return (

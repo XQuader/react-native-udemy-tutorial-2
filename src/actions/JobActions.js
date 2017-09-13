@@ -12,7 +12,7 @@ const JOB_QUERY_PARAMS = {
   format: 'json',
   v: '2',
   latlong: 1,
-  radius: 10,
+  radius: 1,
   q: 'javascript'
 };
 
