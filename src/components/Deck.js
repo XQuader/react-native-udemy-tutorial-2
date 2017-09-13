@@ -51,7 +51,7 @@ class Deck extends Component {
   }
 
   forceSwipe(direction) {
-    const x = 10 + (direction === 'Right' ? SCREEN_WIDTH : -SCREEN_WIDTH);
+    const x = (direction === 'Right' ? SCREEN_WIDTH + 40 : -SCREEN_WIDTH - 40);
 
     Animated.timing(this.positionActiveCard, {
       toValue: { x, y: 0 },
@@ -111,14 +111,14 @@ class Deck extends Component {
             style={[this.getCardStyle(), styles.cardStyle, { zIndex: 1 }]}
             {...this.panResponder.panHandlers}
           >
-            {this.props.renderCard(item)}
+            {this.props.renderCard(item, i - this.state.index)}
           </Animated.View>
         )
       }
 
       return (
         <Animated.View key={item[this.props.keyProp]} style={[styles.cardStyle, { top: 10 * (i - this.state.index) }]}>
-          {this.props.renderCard(item)}
+          {this.props.renderCard(item, i - this.state.index)}
         </Animated.View>
       );
     }).reverse();

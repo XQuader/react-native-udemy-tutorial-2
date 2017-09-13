@@ -1,7 +1,8 @@
 import axios from 'axios';
 import reverseGeocode from 'latlng-to-zip';
 import {
-  FETCH_JOBS
+  DISLIKE_JOB,
+  FETCH_JOBS, LIKE_JOB
 } from './types';
 
 const JOB_QUERY_PARAMS = {
@@ -41,3 +42,13 @@ export const fetchJobs = (region, callback) => async dispatch => {
     console.log(error);
   }
 };
+
+export const likeJob = job => ({
+  type: LIKE_JOB,
+  payload: job
+});
+
+export const dislikeJob = job => ({
+  type: DISLIKE_JOB,
+  payload: job
+});

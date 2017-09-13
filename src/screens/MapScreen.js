@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, View } from 'react-native';
-import { MapView } from 'expo';
+import { ActivityIndicator, View, Platform } from 'react-native';
+import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 import { fetchJobs } from '../actions'
@@ -37,8 +37,9 @@ class MapScreen extends Component {
       <View style={{ flex: 1 }}>
         <MapView
           style={{ flex: 1 }}
-          initialRegion={this.state.region}
+          region={this.state.region}
           onRegionChangeComplete={this.handleRegionChange}
+          cacheEnabled={Platform.OS === 'android'}
         />
         <Button
           title='Search This Area'

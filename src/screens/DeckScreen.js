@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import { Dimensions, Text, View, Platform } from 'react-native';
+import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
 import { Card } from 'react-native-elements';
-import { Dimensions, Text, View, Platform } from 'react-native';
 import Deck from '../components/Deck';
-import { MapView } from 'expo';
+import { likeJob, dislikeJob } from '../actions';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 class DeckScreen extends Component {
-  renderCard(job) {
+  renderCard(job, index) {
     const { latitude, longitude, company, jobtitle, formattedRelativeTime, snippet, url } = job;
     const region = {
       latitude,
@@ -24,10 +25,10 @@ class DeckScreen extends Component {
         title={jobtitle}
       >
         <MapView
-          style={{ flex: 1 }}
-          initialRegion={region}
+          style={{ flex: 1, display: index > 2 ? 'none' : 'flex' }}
+          region={region}
           scrollEnabled={false}
-          cacheEnabled={Platform.OS === 'android' ? true : false}
+          cacheEnabled={Platform.OS === 'android'}
         />
         <View style={styles.detailsWrapper}>
           <Text>{company}</Text>
@@ -40,13 +41,13 @@ class DeckScreen extends Component {
     )
   }
 
-  onSwipeRight(job) {
-    console.log('job liked: ' + job.jobtitle);
-  }
+  onSwipeRight = job => {
+    this.props.likeJob(job);
+  };
 
-  onSwipeLeft(job) {
-    console.log('job disliked: ' + job.jobtitle);
-  }
+  onSwipeLeft = job => {
+    this.props.dislikeJob(job);
+  };
 
   renderNoMoreCards() {
     return (
@@ -83,6 +84,6 @@ const styles = {
 const mapStateToProps = ({ jobs }) => ({
   jobs: jobs.results
 });
-const reduxed = connect(mapStateToProps)(DeckScreen);
 
+const reduxed = connect(mapStateToProps, { likeJob, dislikeJob })(DeckScreen);
 export { reduxed as DeckScreen };
