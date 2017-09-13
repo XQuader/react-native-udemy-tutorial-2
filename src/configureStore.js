@@ -1,4 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import { autoRehydrate, persistStore } from 'redux-persist';
+import { AsyncStorage } from 'react-native';
 import ReduxThunk from 'redux-thunk';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -15,6 +17,7 @@ export default function configureStore() {
   }
 
   const reducers = require('./reducers/index').default;
-  const store = createStore(reducers, {}, composeEnhancers(applyMiddleware(ReduxThunk)));
+  const store = createStore(reducers, {}, composeEnhancers(applyMiddleware(ReduxThunk), autoRehydrate()));
+  persistStore(store, { storage: AsyncStorage, whitelist: ['likes'] });
   return store;
 }
