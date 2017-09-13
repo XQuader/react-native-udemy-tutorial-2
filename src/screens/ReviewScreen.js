@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Platform, Linking } from 'react-native';
-import { Text, Button, Card } from 'react-native-elements';
+import { Text, Button, Card, Icon } from 'react-native-elements';
 import MapView from 'react-native-maps'
 import { connect } from 'react-redux';
 
 class ReviewScreen extends Component {
-  static navigationOptions = ({ navigation: { navigate } }) => ({
+  static navigationOptions = ({ navigation }) => ({
     title: 'Review Jobs',
     headerRight: (
       <Button
         title='Settings'
-        onPress={() => navigate('settings')}
+        onPress={() => navigation.navigate('settings')}
         backgroundColor='rgba(0, 0, 0, 0)'
         color='rgba(0, 122, 255, 1)'
       />
-    )
+    ),
+    tabBarIcon: ({ tintColor }) => <Icon size={30} name='favorite' color={tintColor}/>,
+    tabBarLabel: ({ tintColor }) => <Text style={{ color: tintColor }}>Review Jobs</Text>
   });
 
   renderJob = job => {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, Text, View, Platform } from 'react-native';
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
-import { Button, Card } from 'react-native-elements';
+import { Button, Card, Icon } from 'react-native-elements';
 import Deck from '../components/Deck';
 import { likeJob, dislikeJob } from '../actions';
 
@@ -10,6 +10,12 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 class DeckScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Jobs',
+    tabBarIcon: ({ tintColor }) => <Icon size={30} name='description' color={tintColor}/>,
+    tabBarLabel: ({ tintColor }) => <Text style={{ color: tintColor }}>Jobs</Text>
+  });
+
   renderCard(job, index) {
     const { latitude, longitude, company, jobtitle, formattedRelativeTime, snippet, url } = job;
     const region = {

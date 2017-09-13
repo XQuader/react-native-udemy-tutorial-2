@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { clearLikedJobs } from '../actions';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 
 class SettingsScreen extends Component {
-  static navigationOptions = () => ({
-    title: 'Settings'
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Settings',
+    tabBarIcon: ({ tintColor }) => <Icon size={30} name='settings' color={tintColor}/>,
+    tabBarLabel: ({ tintColor }) => <Text style={{ color: tintColor }}>Settings</Text>
   });
-
   render() {
     return (
       <View style={styles.container}>
