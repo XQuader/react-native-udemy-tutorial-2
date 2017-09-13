@@ -1,5 +1,6 @@
 import {
-  LIKE_JOB
+  LIKE_JOB,
+  CLEAR_LIKED_JOBS
 } from '../actions/types';
 
 const INITIAL_STATE = [];
@@ -12,6 +13,8 @@ export default function (state = INITIAL_STATE, action) {
       const likeDup = state.filter(findByKey);
 
       return likeDup.length ? state : [...state, action.payload];
+    case CLEAR_LIKED_JOBS:
+      return INITIAL_STATE;
     // case DISLIKE_JOB:
     //   const dislikeDup = state.dislikes.filter(findByKey);
     //

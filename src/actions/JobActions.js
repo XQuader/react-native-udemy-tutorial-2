@@ -2,7 +2,9 @@ import axios from 'axios';
 import reverseGeocode from 'latlng-to-zip';
 import {
   DISLIKE_JOB,
-  FETCH_JOBS, LIKE_JOB
+  FETCH_JOBS,
+  LIKE_JOB,
+  CLEAR_LIKED_JOBS
 } from './types';
 
 const JOB_QUERY_PARAMS = {
@@ -52,3 +54,5 @@ export const dislikeJob = job => ({
   type: DISLIKE_JOB,
   payload: job
 });
+
+export const clearLikedJobs = () => ({ type: CLEAR_LIKED_JOBS});
