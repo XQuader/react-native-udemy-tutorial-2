@@ -1,9 +1,26 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Notifications } from 'expo';
+import { StyleSheet, View, Alert } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { WelcomeScreen, ReviewScreen, AuthScreen, DeckScreen, MapScreen, SettingsScreen } from './screens';
+import registerForNotifications from './services/PushNotifications';
 
 export default class App extends React.Component {
+  componentDidMount() {
+    registerForNotifications();
+    Notifications.addListener(notification => {
+      const { data: { text }, origin } = notification;
+
+      if (origin === 'received' && text) {
+        Alert.alert(
+          'New Push Notification',
+          notification.data.text,
+          [{ text: 'Ok.' }]
+        );
+      }
+    });
+  }
+
   render() {
     const MainNavigator = TabNavigator({
       welcome: { screen: WelcomeScreen },
@@ -51,7 +68,7 @@ export default class App extends React.Component {
 
     return (
       <View style={styles.container}>
-        <MainNavigator />
+        <MainNavigator/>
       </View>
     );
   }
